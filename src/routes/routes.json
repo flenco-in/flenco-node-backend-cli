@@ -1,0 +1,8 @@
+[
+  {
+    "name": "categories",
+    "path": "/api/categories",
+    "requiresAuth": false,
+    "hasFileUploads": false
+  }
+]
