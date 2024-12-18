@@ -1,10 +1,10 @@
 {
-  "name": "nodefirst",
+  "name": "flenco-node-backend-cli",
   "version": "0.1.0",
   "description": "CLI tool to generate complete backend projects with Express, TypeScript, and Prisma",
   "main": "dist/index.js",
   "bin": {
-    "nodefirst": "./dist/index.js"
+    "flenco-node-backend-cli": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -32,12 +32,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flenco-in/nodefirst.git"
+    "url": "git+https://github.com/flenco-in/flenco-node-backend-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/flenco-in/nodefirst/issues"
+    "url": "https://github.com/flenco-in/flenco-node-backend-cli/issues"
   },
-  "homepage": "https://github.com/flenco-in/nodefirst#readme",
+  "homepage": "https://github.com/flenco-in/flenco-node-backend-cli#readme",
   "dependencies": {
     "@prisma/client": "^5.8.0",
     "express": "^4.18.2",
