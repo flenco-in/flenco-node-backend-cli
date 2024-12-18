@@ -1,10 +1,10 @@
 {
-  "name": "nodefist",
+  "name": "nodefirst",
   "version": "0.1.0",
   "description": "CLI tool to generate complete backend projects with Express, TypeScript, and Prisma",
   "main": "dist/index.js",
   "bin": {
-    "nodefist": "./dist/index.js"
+    "nodefirst": "./dist/index.js"
   },
   "files": [
     "dist",
