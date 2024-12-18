@@ -32,12 +32,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flenco-in/nodefist.git"
+    "url": "git+https://github.com/flenco-in/nodefirst.git"
   },
   "bugs": {
-    "url": "https://github.com/flenco-in/nodefist/issues"
+    "url": "https://github.com/flenco-in/nodefirst/issues"
   },
-  "homepage": "https://github.com/flenco-in/nodefist#readme",
+  "homepage": "https://github.com/flenco-in/nodefirst#readme",
   "dependencies": {
     "@prisma/client": "^5.8.0",
     "express": "^4.18.2",
