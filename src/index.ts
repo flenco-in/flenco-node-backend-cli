@@ -10,6 +10,7 @@ import { generateController } from './controllers/controller.generator';
 import { generateMiddleware } from './middleware/middleware.generator';
 import { RouteTracker } from './utils/route.tracker';
 import { generateUtils } from './utils/utils.generator';
+import { generateServerFile } from './utils/server.generator';
 
 const execAsync = promisify(exec);
 
@@ -41,6 +42,33 @@ async function createDirectoryIfNotExists(dirPath: string): Promise<void> {
   }
 }
 
+async function generateTsConfig(): Promise<void> {
+  const tsConfig = {
+    "compilerOptions": {
+      "target": "es2017",
+      "module": "commonjs",
+      "lib": ["es2017", "es7", "es6"],
+      "declaration": true,
+      "outDir": "dist",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "rootDir": "src",
+      "baseUrl": "src",
+      "paths": {
+        "@/*": ["./*"]
+      }
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+  };
+
+  await fs.writeFile('tsconfig.json', JSON.stringify(tsConfig, null, 2));
+}
+
 async function generateProjectStructure(): Promise<void> {
   const directories = [
     'src/routes',
@@ -57,6 +85,8 @@ async function generateProjectStructure(): Promise<void> {
   for (const dir of directories) {
     await createDirectoryIfNotExists(dir);
   }
+
+  await generateTsConfig();
 }
 
 async function promptDBCredentials(): Promise<DBConfig> {
@@ -256,13 +286,14 @@ async function createPackageJson(dbConfig: DBConfig): Promise<void> {
     "name": "backend-generator",
     "version": "1.0.0",
     "description": "Generated backend project with authentication and file upload",
-    "main": "dist/index.js",
+    "main": "src/server.ts",
     "scripts": {
       "build": "tsc",
-      "start": "node dist/index.js",
+      "start": "node dist/server.js",
       "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
       "prisma:generate": "prisma generate",
-      "prisma:push": "prisma db push"
+      "prisma:push": "prisma db push",
+      "setup": "npm install && npx prisma generate"
     },
     "dependencies": {
       "@prisma/client": "^5.8.0",
@@ -353,6 +384,11 @@ async function main() {
     // Create package.json with database-specific dependencies
     await createPackageJson(dbConfig);
     console.log('✅ Package.json created');
+
+
+    // Generate server file
+    await generateServerFile();
+    console.log('✅ Server file generated');
 
     // Create initial .env file with database URL
     await createEnvFile(dbConfig);
