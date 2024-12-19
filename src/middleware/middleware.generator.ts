@@ -1,4 +1,3 @@
-// src/middleware/middleware.generator.ts
 import { promises as fs } from 'fs';
 import path from 'path';
 
