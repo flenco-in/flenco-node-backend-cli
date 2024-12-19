@@ -1,84 +1,90 @@
 # Flenco Node Backend CLI
 
-A powerful CLI tool that generates a fully-functional Node.js backend project with TypeScript, Express, and Prisma. It automatically creates CRUD operations, authentication, and file upload capabilities based on your existing database schema.
+A powerful CLI tool to generate a production-ready Node.js backend with Express, TypeScript, and Prisma. It automatically creates CRUD operations with validation, authentication, and file upload capabilities based on your existing database schema.
 
-## Quick Start 🚀
+## Features 🚀
 
-1. Install the CLI tool globally:
+- 🔥 Fast project setup
+- 📝 TypeScript support
+- 🔐 JWT Authentication
+- 📊 Prisma ORM integration
+- ✨ Automatic CRUD generation
+- 📝 Request validation with Zod
+- 🔄 Built-in pagination and sorting
+- 🛠️ File upload support
+- 📧 Email service integration
+- 🔍 Error handling
+- 🎯 Clean architecture
+
+## Prerequisites
+
+- Node.js >= 14
+- npm >= 6
+- PostgreSQL or MySQL database
+
+## Installation
+
 ```bash
 npm install -g flenco-node-backend-cli
 ```
 
-2. Create a new directory for your project:
+## Quick Start
+
+### 1. Initialize a New Project
+
 ```bash
-mkdir my-backend-project
-cd my-backend-project
+# Create a new directory for your project
+mkdir my-backend
+cd my-backend
+
+# Initialize the project
+flenco-init
 ```
 
-3. Run the CLI tool:
+During initialization, you'll be prompted for:
+- Database type (PostgreSQL/MySQL)
+- Database credentials
+- Other configuration options
+
+### 2. Generate APIs for Your Tables
+
 ```bash
-flenco-node-backend-cli
+flenco-generate
 ```
 
-4. Follow the interactive prompts:
-   - Choose database type (PostgreSQL/MySQL)
-   - Enter database credentials
-   - Select table for CRUD generation
-   - Configure authentication and file upload options
-
-5. After generation is complete, run:
-```bash
-npm install
-npm run dev
-```
-
-## Features ✨
-
-- 🚀 Quick setup of Node.js backend projects
-- 📝 TypeScript support out of the box
-- 🔐 JWT Authentication
-- 📁 File upload support
-- 🗄️ Database integration (PostgreSQL/MySQL)
-- 🔄 Automatic CRUD operations
-- ✨ Built-in pagination
-- 🛠️ Validation using Zod
-- 🔍 Database schema introspection
-- 🎯 Middleware support
-- 🌟 Best practices and patterns
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-- PostgreSQL or MySQL database
+This will:
+- Show available tables from your database
+- Let you select a table
+- Configure authentication and file upload options
+- Generate complete CRUD operations
 
 ## Project Structure
 
 ```
 ├── src/
-│   ├── routes/           # Route definitions
-│   ├── controllers/      # Request handlers
-│   ├── services/         # Business logic
-│   ├── middleware/       # Custom middleware
-│   ├── validation/       # Request validation
-│   ├── utils/           # Utility functions
-│   └── templates/       # Email templates
-├── prisma/              # Prisma schema and migrations
-├── uploads/            # File upload directory
-└── .env               # Environment variables
+│   ├── routes/          # API routes
+│   ├── controllers/     # Request handlers
+│   ├── services/        # Business logic
+│   ├── middleware/      # Custom middleware
+│   ├── validation/      # Request validation
+│   ├── utils/          # Utility functions
+│   └── templates/      # Email templates
+├── prisma/             # Prisma schema and migrations
+├── uploads/           # File uploads directory
+└── .env              # Environment variables
 ```
 
 ## Available Scripts
 
-- `npm run build`: Build the project
-- `npm start`: Run the production server
-- `npm run dev`: Start development server
-- `npm run prisma:generate`: Generate Prisma client
-- `npm run prisma:push`: Push schema to database
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm start        # Start production server
+```
 
-## API Endpoints
+## Generated API Endpoints
 
-For each generated table, the following endpoints are created:
+For each table, the following endpoints are created:
 
 ```
 GET    /api/{table}          # Get all records (with pagination)
@@ -88,48 +94,84 @@ PATCH  /api/{table}/:id      # Update record
 DELETE /api/{table}/:id      # Delete record
 ```
 
-## Environment Variables
+### Query Parameters
 
-After project generation, update your `.env` file with your configurations:
+- `page`: Page number (default: 1)
+- `limit`: Items per page (default: 10)
+- `sortBy`: Sort field
+- `sortOrder`: 'asc' or 'desc'
+- `search`: Search term
+- `status`: Filter by status
+
+## Configuration
+
+The generated `.env` file includes:
 
 ```env
-# Database Configuration
+# Database
 DATABASE_URL=your_database_url
 PORT=3000
 
-# JWT Configuration
+# JWT
 JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=1d
 
-# Email Configuration (if needed)
+# Email (if needed)
 SMTP_HOST=smtp.example.com
 SMTP_PORT=587
 SMTP_USER=your-email
 SMTP_PASS=your-password
 
-# File Upload Configuration (if enabled)
+# File Upload
 MAX_FILE_SIZE=5242880
-ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif,application/pdf
+ALLOWED_FILE_TYPES=image/jpeg,image/png,image/gif
 ```
 
-## Troubleshooting
+## Authentication
 
-If you encounter any issues:
-
-1. Make sure you have installed the package globally:
-```bash
-npm install -g flenco-node-backend-cli
+When enabled, protect routes using the JWT middleware:
+```typescript
+router.use(auth());
 ```
 
-2. Verify that your database is running and accessible
+## Validation
 
-3. Check that all required environment variables are properly set
+Request validation is handled using Zod:
+```typescript
+router.post('/', validate(createSchema), controller.create);
+```
 
-## Support
+## Error Handling
 
-For issues and feature requests, please visit:
-[GitHub Issues](https://github.com/yourusername/flenco-node-backend-cli/issues)
+The generated project includes global error handling for:
+- Validation errors
+- Authentication errors
+- Not found errors
+- Database errors
+- Unexpected errors
+
+## Commands
+
+- `flenco-init`: Initialize a new project
+- `flenco-generate`: Generate APIs for a table
+- `flenco-help`: Show available commands
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Issues
+
+If you find a bug or want to request a new feature, please create an issue at [GitHub Issues](https://github.com/flenco-in/flenco-node-backend-cli/issues).
+
+## Author
+
+Atish Paul
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT
+
+## Support
+
+For support, email [support@flenco.in](mailto:support@flenco.in) or raise an issue on GitHub.
