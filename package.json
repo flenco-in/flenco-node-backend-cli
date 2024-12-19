@@ -1,6 +1,6 @@
 {
   "name": "flenco-node-backend-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI tool to generate complete backend projects with Express, TypeScript, and Prisma",
   "main": "dist/index.js",
   "bin": {
