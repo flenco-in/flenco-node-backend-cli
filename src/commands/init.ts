@@ -10,6 +10,7 @@ import { generateUtils } from '../utils/utils.generator';
 import { generateAppFile } from '../utils/app.generator';
 import { generateServerFile } from '../utils/server.generator';
 import { generateMiddleware } from '../middleware/middleware.generator';
+import { generateValidationFiles } from '../utils/validation.generator';
 
 const execAsync = promisify(exec);
 
@@ -263,6 +264,7 @@ async function initProject() {
       generateServerFile(),
       generateMiddleware(),
       generateUtils(),
+      generateValidationFiles(),
       createEnvFile(dbConfig),
       generatePrismaSchema(dbConfig),
       generateTsConfig(),
