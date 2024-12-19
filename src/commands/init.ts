@@ -4,6 +4,8 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { generateMiddleware } from '@/middleware/middleware.generator';
+import { generateUtils } from '@/utils/utils.generator';
 
 const execAsync = promisify(exec);
 
@@ -348,33 +350,43 @@ async function initProject() {
     console.log('🚀 Welcome to Flenco Backend Generator!');
     console.log('Initializing new project...');
     
+    // Get database credentials
+    const dbConfig = await promptDBCredentials();
+    
     // Create project structure
     await generateProjectStructure();
     console.log('✅ Project structure created');
 
-    // Get database credentials
-    const dbConfig = await promptDBCredentials();
-    
-    // Generate configuration files
+    // Generate all base files
     await Promise.all([
       createPackageJson(dbConfig),
-      generateTsConfig(),
-      createEnvFile(dbConfig),
-      generatePrismaSchema(dbConfig),
       generateAppFile(),
       generateServerFile(),
-      generateInitialRouteIndex()
+      generateMiddleware(),
+      generateUtils(),
+      createEnvFile(dbConfig),
+      generatePrismaSchema(dbConfig)
     ]);
     console.log('✅ Configuration files generated');
 
+    // Install dependencies
+    console.log('📦 Installing dependencies...');
+    await execAsync('npm install');
+    console.log('✅ Dependencies installed');
+
+    // Run Prisma commands
+    console.log('🔄 Introspecting database schema...');
+    await execAsync('npx prisma db pull');
+    console.log('✅ Database schema introspected');
+
+    console.log('🔄 Generating Prisma Client...');
+    await execAsync('npx prisma generate');
+    console.log('✅ Prisma Client generated');
+
     console.log('\n📦 Project initialized successfully!');
     console.log('\nNext steps:');
-    console.log('1. Run "npm install" to install dependencies');
-    console.log('2. Verify database connection in .env file');
-    console.log('3. Run "npx prisma generate" to generate Prisma Client');
-    console.log('4. To generate API for a table, run:');
-    console.log('   flenco-generate');
-    console.log('\nHappy coding! 🎉');
+    console.log('1. Run "flenco-generate" to generate API for your tables');
+    console.log('2. Run "npm run dev" to start the development server');
     
   } catch (error) {
     console.error('❌ Error:', error);

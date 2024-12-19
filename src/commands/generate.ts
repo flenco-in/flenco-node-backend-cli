@@ -7,6 +7,25 @@ import { getTableFields, promptTableSelection } from '../utils/schema.utils';
 import { promises as fs } from 'fs';
 import path from 'path';
 
+
+async function getTables(): Promise<string[]> {
+  try {
+    const schemaContent = await fs.readFile('prisma/schema.prisma', 'utf8');
+    const models = schemaContent
+      .match(/model\s+(\w+)\s+{/g)
+      ?.map(model => model.split(/\s+/)[1]) || [];
+
+    if (models.length === 0) {
+      throw new Error('No tables found in the database schema');
+    }
+
+    return models;
+  } catch (error) {
+    console.error('Error reading schema:', error);
+    throw new Error('Failed to read schema file');
+  }
+}
+
 interface GenerateOptions {
   tableName: string;
   fields: Array<{ name: string; type: string; isRequired: boolean }>;
@@ -116,18 +135,16 @@ async function generateTableAPI() {
       process.exit(1);
     }
 
+    // Get available tables
+    const tables = await getTables();
+
     // Let user select table
     const { tableName } = await inquirer.prompt([
       {
-        type: 'input',
+        type: 'list',
         name: 'tableName',
-        message: 'Enter the name of the table to generate API for:',
-        validate: (input: string) => {
-          if (input.trim().length === 0) {
-            return 'Table name cannot be empty';
-          }
-          return true;
-        }
+        message: 'Select a table to generate API for:',
+        choices: tables
       }
     ]);
     
