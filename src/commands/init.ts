@@ -277,19 +277,11 @@ async function initProject() {
     await execAsync('npm install');
     console.log('✅ Dependencies installed');
 
-    // Run Prisma commands
-    console.log('🔄 Introspecting database schema...');
-    await execAsync('npx prisma db pull');
-    console.log('✅ Database schema introspected');
-
-    console.log('🔄 Generating Prisma Client...');
-    await execAsync('npx prisma generate');
-    console.log('✅ Prisma Client generated');
-
     console.log('\n📦 Project initialized successfully!');
     console.log('\nNext steps:');
-    console.log('1. Run "flenco-generate" to generate API for your tables');
-    console.log('2. Run "npm run dev" to start the development server');
+    console.log('1. Configure your database and update schema.prisma');
+    console.log('2. Run "flenco-generate" to generate API for your tables');
+    console.log('3. Run "npm run dev" to start the development server');
     
   } catch (error) {
     console.error('❌ Error:', error);

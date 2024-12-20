@@ -6,6 +6,10 @@ import { generateService } from '../services/service.generator';
 import { getTableFields, promptTableSelection } from '../utils/schema.utils';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 
 async function getTables(): Promise<string[]> {
@@ -134,6 +138,15 @@ async function generateTableAPI() {
       console.error('❌ Project is not initialized. Please run "flenco-init" first.');
       process.exit(1);
     }
+
+    // Run Prisma commands first
+    console.log('🔄 Introspecting database schema...');
+    await execAsync('npx prisma db pull');
+    console.log('✅ Database schema introspected');
+
+    console.log('🔄 Generating Prisma Client...');
+    await execAsync('npx prisma generate');
+    console.log('✅ Prisma Client generated');
 
     // Get available tables
     const tables = await getTables();
