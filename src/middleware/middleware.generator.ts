@@ -178,9 +178,61 @@ export const paginationSchema = z.object({
 });
 `;
 
+  // Upload Utility
+  const uploadUtilContent = `
+ import multer from 'multer';
+ import path from 'path';
+ import { Request } from 'express';
+ import { AppError } from '../middleware/error.middleware';
+ 
+ export class UploadUtil {
+   private static storage = multer.diskStorage({
+     destination: (req: Request, file: Express.Multer.File, cb) => {
+       cb(null, 'uploads/');
+     },
+     filename: (req: Request, file: Express.Multer.File, cb) => {
+       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+       cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+     }
+   });
+ 
+   private static fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+     const allowedMimes = process.env.ALLOWED_FILE_TYPES?.split(',') || 
+       ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+     
+     if (allowedMimes.includes(file.mimetype)) {
+       cb(null, true);
+     } else {
+       cb(new AppError('Invalid file type', 400));
+     }
+   };
+ 
+   static upload = multer({
+     storage: this.storage,
+     fileFilter: this.fileFilter,
+     limits: {
+       fileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880') // 5MB default
+     }
+   });
+ }`;
+
+  // Upload Middleware
+  const uploadMiddlewareContent = `
+import { Request, Response, NextFunction } from 'express';
+import { UploadUtil } from '../utils/upload.util';
+
+export const uploadFile = (fieldName: string) => {
+  return UploadUtil.upload.single(fieldName);
+};
+
+export const uploadFiles = (fieldName: string, maxCount: number = 5) => {
+  return UploadUtil.upload.array(fieldName, maxCount);
+};`;
+
   // Create directories if they don't exist
   const middlewareDir = path.join(process.cwd(), 'src', 'middleware');
   const validationDir = path.join(process.cwd(), 'src', 'validation');
+  const utilsDir = path.join(process.cwd(), 'src', 'utils');
 
   await fs.mkdir(middlewareDir, { recursive: true });
   await fs.mkdir(validationDir, { recursive: true });
@@ -192,7 +244,9 @@ export const paginationSchema = z.object({
     fs.writeFile(path.join(middlewareDir, 'validate.middleware.ts'), validateMiddleware),
     fs.writeFile(path.join(middlewareDir, 'async.middleware.ts'), asyncMiddleware),
     fs.writeFile(path.join(validationDir, 'base.validation.ts'), baseValidation),
-    fs.writeFile(path.join(validationDir, 'common.validation.ts'), commonValidation)
+    fs.writeFile(path.join(validationDir, 'common.validation.ts'), commonValidation),
+    fs.writeFile(path.join(utilsDir, 'upload.util.ts'), uploadUtilContent),
+    fs.writeFile(path.join(middlewareDir, 'upload.middleware.ts'), uploadMiddlewareContent)
   ]);
 }
 
