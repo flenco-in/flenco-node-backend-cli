@@ -1,6 +1,12 @@
 # Flenco Node Backend CLI
 
-A powerful CLI tool to generate a production-ready Node.js backend with Express, TypeScript, and Prisma. It automatically creates CRUD operations with validation, authentication, and file upload capabilities based on your existing database schema.
+A powerful CLI tool to generate a production-ready Node.js backend boilerplate with Express, TypeScript, and Prisma. It automatically creates CRUD operations with validation, authentication, and file upload capabilities based on your existing database schema.
+
+[![NPM Downloads](https://img.shields.io/npm/dm/flenco-node-backend-cli.svg)](https://www.npmjs.com/package/flenco-node-backend-cli)
+[![License](https://img.shields.io/npm/l/flenco-node-backend-cli.svg)](https://github.com/flenco-in/flenco-node-backend-cli/blob/main/LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/flenco-in/flenco-node-backend-cli/pulls)
+[![Buy Me A Coffee](https://img.shields.io/badge/Sponsor-Buy%20Me%20A%20Coffee-orange.svg)](https://www.buymeacoffee.com/atishpaul)
 
 ## Features 🚀
 
@@ -175,3 +181,5 @@ MIT
 ## Support
 
 For support, email [support@flenco.in](mailto:support@flenco.in) or raise an issue on GitHub.
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/atishpaul)
