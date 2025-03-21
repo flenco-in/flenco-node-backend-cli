@@ -59,7 +59,7 @@ interface DBAnswers {
 }
 
 async function promptDBCredentials(): Promise<DBConfig> {
-  const dbConfig = await inquirer.prompt<DBAnswers>([
+  const questions = [
     {
       type: 'list',
       name: 'type',
@@ -78,8 +78,8 @@ async function promptDBCredentials(): Promise<DBConfig> {
     {
       type: 'input',
       name: 'port',
-      message: (answers: DBAnswers) => `Enter database port (default ${answers.type === 'postgresql' ? '5432' : '3306'}):`,
-      default: (answers: DBAnswers) => answers.type === 'postgresql' ? '5432' : '3306'
+      message: (answers: any) => `Enter database port (default ${answers.type === 'postgresql' ? '5432' : '3306'}):`,
+      default: (answers: any) => answers.type === 'postgresql' ? '5432' : '3306'
     },
     {
       type: 'input',
@@ -99,8 +99,10 @@ async function promptDBCredentials(): Promise<DBConfig> {
       message: 'Enter database password:',
       mask: '*'
     }
-  ]);
+  ];
 
+  // Use prompt method with proper casting
+  const dbConfig = await inquirer.prompt(questions) as unknown as DBConfig;
   return dbConfig;
 }
 

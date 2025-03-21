@@ -31,25 +31,27 @@ app.get('/health', (req: Request, res: Response) => {
   res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
-// Global Error Handler
-app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
+// Global Error Handler - must have 4 parameters for Express to recognize as error handler
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   console.error('Error:', err);
-
+  
   if (err instanceof ZodError) {
-    return res.status(400).json({
+    res.status(400).json({
       status: 'error',
       message: 'Validation failed',
       errors: err.errors
     });
+    return;
   }
-
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal server error';
-
+  
+  const error = err as CustomError;
+  const statusCode = error.statusCode || 500;
+  const message = error.message || 'Internal server error';
+  
   res.status(statusCode).json({
     status: 'error',
     message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
   });
 });
 
