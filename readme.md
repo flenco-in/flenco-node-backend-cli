@@ -64,6 +64,14 @@ This will:
 - Configure authentication and file upload options
 - Generate complete CRUD operations
 
+### 3. Refresh APIs When Your Schema Changes
+
+```bash
+flenco-refresh
+```
+
+If you've made changes to your database schema, use this command to update your existing API endpoints while preserving your customizations.
+
 ## Project Structure
 
 ```
@@ -160,7 +168,25 @@ The generated project includes global error handling for:
 
 - `flenco-init`: Initialize a new project
 - `flenco-generate`: Generate APIs for a table
+- `flenco-refresh`: Refresh APIs for tables that have changed in the database
 - `flenco-help`: Show available commands
+
+## Using the Refresh Command
+
+When your database schema changes, you can update your existing APIs with:
+
+```bash
+flenco-refresh
+```
+
+This will:
+- Pull the latest database schema using Prisma introspection
+- Show you a list of tables with existing APIs
+- Let you select which tables to refresh
+- Regenerate the routes, controllers, and services while preserving your customizations
+- Keep settings like authentication and file upload configurations
+
+This is particularly useful during development when your database schema evolves. The command ensures your APIs stay in sync with your database structure without having to manually recreate them.
 
 ## Contributing
 

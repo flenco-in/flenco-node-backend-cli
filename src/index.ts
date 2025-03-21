@@ -19,6 +19,13 @@ program
     import('./commands/generate');
   });
 
+program
+  .command('refresh')
+  .description('Refresh APIs for tables that have changed in the database')
+  .action(() => {
+    import('./commands/refresh');
+  });
+
 // Add a default action for when no command is specified
 program
   .action(() => {
@@ -26,6 +33,7 @@ program
     console.log('\nAvailable commands:');
     console.log('  flenco-init     - Initialize a new backend project');
     console.log('  flenco-generate - Generate API for a database table');
+    console.log('  flenco-refresh  - Refresh APIs for tables that have changed');
     console.log('\nRun any command with --help for more information.');
   });
 

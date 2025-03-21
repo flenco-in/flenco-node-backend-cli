@@ -6,6 +6,7 @@
   "bin": {
     "flenco-init": "./dist/commands/init.js",
     "flenco-generate": "./dist/commands/generate.js",
+    "flenco-refresh": "./dist/commands/refresh.js",
     "flenco-help": "./dist/index.js"
   },
   "files": [
