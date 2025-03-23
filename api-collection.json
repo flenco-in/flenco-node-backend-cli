@@ -1,0 +1,340 @@
+{
+  "info": {
+    "_postman_id": "78441319-e6d6-4596-ad53-860cf3b40b1e",
+    "name": "test-project API",
+    "description": "API collection for test-project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ],
+  "item": [
+    {
+      "name": "Metadata",
+      "item": [
+        {
+          "id": "e0d44db4-3ea4-4cc0-bf1b-92f1c0c61d1a",
+          "name": "Get All Metadata",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata?page=1&limit=10",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "description": "Get all metadata records with pagination"
+          },
+          "response": []
+        },
+        {
+          "id": "325e1d3a-72ee-47a0-a963-64ee1f05be27",
+          "name": "Get Metadata by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata/1",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata",
+                "1"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "description": "Get a single metadata record by ID"
+          },
+          "response": []
+        },
+        {
+          "id": "eb9f0ef0-ba6b-482a-817e-5e300f4ac60e",
+          "name": "Create Metadata",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Create a new metadata record"
+          },
+          "response": []
+        },
+        {
+          "id": "f9e6b9b8-ea4d-4103-9525-0904baac95ae",
+          "name": "Update Metadata",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata/1",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata",
+                "1"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "description": "Update an existing metadata record"
+          },
+          "response": []
+        },
+        {
+          "id": "0f0df168-fdbf-4e96-aa31-01caa19fb2a1",
+          "name": "Delete Metadata",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata/1",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata",
+                "1"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "description": "Delete a metadata record"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "id": "09e06b1a-ffec-470e-b55a-4401320d00e3",
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"name\": \"John Doe\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "1f8f4f2a-70c0-486a-a02a-4b60faddb676",
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Metadata",
+      "item": [
+        {
+          "id": "5fe0a27c-ff44-449c-95da-1c41a5071241",
+          "name": "Get API Metadata",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/metadata",
+              "host": [
+                "baseUrl"
+              ],
+              "path": [
+                "api",
+                "metadata"
+              ],
+              "variable": [
+                {
+                  "key": "baseUrl",
+                  "value": "{{baseUrl}}"
+                }
+              ]
+            },
+            "description": "Retrieve metadata about all available API endpoints"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

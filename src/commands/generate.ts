@@ -8,6 +8,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { generatePostmanCollection } from '../utils/postman.generator';
 
 const execAsync = promisify(exec);
 
@@ -198,6 +199,18 @@ async function generateTableAPI() {
     console.log(`POST   /api/${tableName}          - Create new record`);
     console.log(`PATCH  /api/${tableName}/:id      - Update record`);
     console.log(`DELETE /api/${tableName}/:id      - Delete record`);
+    
+    // Update Postman collection
+    console.log('\n🔄 Updating Postman collection...');
+    
+    // Get project name from package.json
+    const packageJsonPath = path.join(process.cwd(), 'package.json');
+    const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+    const projectName = packageJson.name || 'api';
+    
+    const postmanPath = await generatePostmanCollection(projectName);
+    console.log(`✅ Postman collection updated at: ${postmanPath}`);
+    console.log('   Using a single, unified collection file for all your APIs');
     
   } catch (error) {
     console.error('❌ Error:', error);

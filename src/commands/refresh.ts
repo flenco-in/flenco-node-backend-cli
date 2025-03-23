@@ -8,6 +8,7 @@ import { generateRoute } from '../routes/route.generator';
 import { generateController } from '../controllers/controller.generator';
 import { generateService } from '../services/service.generator';
 import { getTableFields } from '../utils/schema.utils';
+import { generatePostmanCollection } from '../utils/postman.generator';
 
 const execAsync = promisify(exec);
 
@@ -138,6 +139,20 @@ async function refreshTableApis(): Promise<void> {
       });
       
       console.log(`✅ API for ${api.tableName} refreshed successfully`);
+    }
+    
+    // After refreshing the selected APIs, also update the Postman collection
+    if (selectedApis.length > 0) {
+      console.log('🔄 Updating Postman collection...');
+      
+      // Get project name from package.json
+      const packageJsonPath = path.join(process.cwd(), 'package.json');
+      const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf8'));
+      const projectName = packageJson.name || 'api';
+      
+      const postmanPath = await generatePostmanCollection(projectName);
+      console.log(`✅ Postman collection updated at: ${postmanPath}`);
+      console.log('   Using a single, unified collection file for all your APIs');
     }
     
     console.log('\n✨ All selected APIs have been refreshed successfully!');

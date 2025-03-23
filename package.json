@@ -1,6 +1,6 @@
 {
   "name": "flenco-node-backend-cli",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "CLI tool to generate complete backend projects with Express, TypeScript, and Prisma",
   "main": "dist/index.js",
   "bin": {
@@ -52,6 +52,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
     "nodemailer": "^6.10.0",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -62,6 +63,7 @@
     "@types/multer": "^1.4.12",
     "@types/node": "^22.13.11",
     "@types/nodemailer": "^6.4.17",
+    "@types/uuid": "^10.0.0",
     "prisma": "^6.5.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2"

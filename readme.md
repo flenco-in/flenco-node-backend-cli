@@ -21,6 +21,8 @@ A powerful CLI tool to generate a production-ready Node.js backend boilerplate w
 - 📧 Email service integration
 - 🔍 Error handling
 - 🎯 Clean architecture
+- 📚 API metadata endpoint
+- 📦 Automatic Postman collection generation
 
 ## Prerequisites
 
@@ -107,6 +109,24 @@ POST   /api/{table}          # Create new record
 PATCH  /api/{table}/:id      # Update record
 DELETE /api/{table}/:id      # Delete record
 ```
+
+The system also provides these utility endpoints:
+
+```
+GET    /api/metadata         # Get API documentation and schema information
+```
+
+### Postman Collection
+
+Each time you initialize a project or generate/refresh APIs, a Postman collection is automatically generated with:
+
+- Complete API endpoint documentation
+- Request examples with proper parameters
+- Authentication setup
+- Environment variables
+- Sample request bodies
+
+You can import this collection directly into Postman to quickly test your API.
 
 ### Query Parameters
 
