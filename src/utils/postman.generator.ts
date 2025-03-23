@@ -81,7 +81,7 @@ export async function generatePostmanCollection(projectName: string) {
         },
         variable: [
           {
-            key: "baseUrl",
+            key: "url",
             value: "http://localhost:3000"
           }
         ],
@@ -135,15 +135,9 @@ export async function generatePostmanCollection(projectName: string) {
             method: "GET",
             header: [],
             url: {
-              raw: "{{baseUrl}}/api/metadata",
-              host: ["baseUrl"],
-              path: ["api", "metadata"],
-              variable: [
-                {
-                  key: "baseUrl",
-                  value: "{{baseUrl}}"
-                }
-              ]
+              raw: "{{url}}/api/metadata",
+              host: ["{{url}}"],
+              path: ["api", "metadata"]
             },
             description: "Retrieve metadata about all available API endpoints"
           },
@@ -192,8 +186,8 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
       method: "GET",
       header: getAuthHeader(),
       url: {
-        raw: `{{baseUrl}}/api/${tableName.toLowerCase()}?page=1&limit=10`,
-        host: ["baseUrl"],
+        raw: `{{url}}/api/${tableName.toLowerCase()}?page=1&limit=10`,
+        host: ["{{url}}"],
         path: ["api", tableName.toLowerCase()],
         query: [
           {
@@ -203,12 +197,6 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
           {
             key: "limit",
             value: "10"
-          }
-        ],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
           }
         ]
       },
@@ -225,15 +213,9 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
       method: "GET",
       header: getAuthHeader(),
       url: {
-        raw: `{{baseUrl}}/api/${tableName.toLowerCase()}/1`,
-        host: ["baseUrl"],
-        path: ["api", tableName.toLowerCase(), "1"],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
-          }
-        ]
+        raw: `{{url}}/api/${tableName.toLowerCase()}/1`,
+        host: ["{{url}}"],
+        path: ["api", tableName.toLowerCase(), "1"]
       },
       description: `Get a single ${tableName} record by ID`
     },
@@ -248,15 +230,9 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
       method: "POST",
       header: [...getAuthHeader(), getJsonHeader()],
       url: {
-        raw: `{{baseUrl}}/api/${tableName.toLowerCase()}`,
-        host: ["baseUrl"],
-        path: ["api", tableName.toLowerCase()],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
-          }
-        ]
+        raw: `{{url}}/api/${tableName.toLowerCase()}`,
+        host: ["{{url}}"],
+        path: ["api", tableName.toLowerCase()]
       },
       body: {
         mode: "raw",
@@ -280,15 +256,9 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
       method: "PATCH",
       header: [...getAuthHeader(), getJsonHeader()],
       url: {
-        raw: `{{baseUrl}}/api/${tableName.toLowerCase()}/1`,
-        host: ["baseUrl"],
-        path: ["api", tableName.toLowerCase(), "1"],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
-          }
-        ]
+        raw: `{{url}}/api/${tableName.toLowerCase()}/1`,
+        host: ["{{url}}"],
+        path: ["api", tableName.toLowerCase(), "1"]
       },
       body: {
         mode: "raw",
@@ -312,15 +282,9 @@ async function createRequestsForTable(tableName: string): Promise<PostmanRequest
       method: "DELETE",
       header: getAuthHeader(),
       url: {
-        raw: `{{baseUrl}}/api/${tableName.toLowerCase()}/1`,
-        host: ["baseUrl"],
-        path: ["api", tableName.toLowerCase(), "1"],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
-          }
-        ]
+        raw: `{{url}}/api/${tableName.toLowerCase()}/1`,
+        host: ["{{url}}"],
+        path: ["api", tableName.toLowerCase(), "1"]
       },
       description: `Delete a ${tableName} record`
     },
@@ -356,15 +320,9 @@ function createAuthRequest(name: string, method: string, path: string, body: any
       method,
       header: [getJsonHeader()],
       url: {
-        raw: `{{baseUrl}}/api/${path}`,
-        host: ["baseUrl"],
-        path: ["api", ...path.split('/')],
-        variable: [
-          {
-            key: "baseUrl",
-            value: "{{baseUrl}}"
-          }
-        ]
+        raw: `{{url}}/api/${path}`,
+        host: ["{{url}}"],
+        path: ["api", ...path.split('/')]
       },
       body: {
         mode: "raw",
